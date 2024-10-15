@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:sql_f_lite/view/home.dart';
-import 'package:sql_f_lite/viewModel/viewModel.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sql_f_lite/view/homePage.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(ProviderScope(child: const MyApp())
+    );
 }
 
 class MyApp extends StatelessWidget {
@@ -12,12 +12,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  ChangeNotifierProvider(
-      create: (_) => UserViewModel()..fetchUsers(),
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home:Home()
-      )
+    return  MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home:TodoScreen()
     );
   }
 }

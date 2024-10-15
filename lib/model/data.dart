@@ -1,24 +1,24 @@
 class User {
   final int? id;
-  final String name;
-  final int phoneNumber;
+  final String title;
+  final String note;
 
-  User({this.id, required this.name, required this.phoneNumber});
+  User({this.id, required this.title, required this.note});
 
  
   Map<String, dynamic> toMap() {
     return {
       'id': id,
-      'name': name,
-      'phoneNumber': phoneNumber,
+      'title': title,
+      'note': note,
     };
   }
 
   factory User.fromMap(Map<String, dynamic> map) {
     return User(
       id: map['id'],
-      name: map['name'],
-      phoneNumber: map['phoneNumber'],
+      title: map['title'],
+      note: map['note'],
     );
   }
 }

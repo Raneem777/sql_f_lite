@@ -1,4 +1,4 @@
 import 'package:flutter/material.dart';
 
-TextEditingController nameController = TextEditingController();
-TextEditingController phoneNumberController = TextEditingController();
+TextEditingController titleController = TextEditingController();
+TextEditingController noteController = TextEditingController();
