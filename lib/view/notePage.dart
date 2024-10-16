@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sql_f_lite/bases/baseAppBar.dart';
-import 'package:sql_f_lite/bases/showDeleteDialoge.dart';
+import 'package:sql_f_lite/reuseablaComponents/showDeleteDialoge.dart';
 import 'package:sql_f_lite/constants/colors.dart';
 import 'package:sql_f_lite/model/data.dart';
 import 'package:sql_f_lite/viewModel/userProvider.dart';
