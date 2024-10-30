@@ -6,7 +6,7 @@ Text emptyNotes = Text("No Notes Available", style: textStylee);
 Text addNote = Text("Add Note", style: textStylee2);
 Text yourNote = Text("Add Note", style: textStylee2);
 TextStyle? textStylee =
-    TextStyle(fontSize: 25, fontWeight: FontWeight.w700, color: white);
+    TextStyle(fontSize: 25, fontWeight: FontWeight.w700, color: black);
 
 TextStyle? textStylee2 =
     TextStyle(fontSize: 23, fontWeight: FontWeight.w700, color: black);

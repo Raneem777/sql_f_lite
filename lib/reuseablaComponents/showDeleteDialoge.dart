@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sql_f_lite/constants/colors.dart';
 import 'package:sql_f_lite/constants/texts.dart';
-import 'package:sql_f_lite/view/homePage.dart';
-import 'package:sql_f_lite/viewModel/userProvider.dart';
+import 'package:sql_f_lite/notes/view/myHomePage.dart';
+import 'package:sql_f_lite/notes/viewModel/viewModel.dart';
 
 Future<void> showDeleteConfirmationDialog(
     BuildContext context, WidgetRef ref, int userId) async {
@@ -31,9 +31,10 @@ Future<void> showDeleteConfirmationDialog(
           TextButton(
             child: const Text('Delete'),
             onPressed: () {
-              ref.read(userViewModelProvider.notifier).deleteUser(userId);
+              ref.read(notesViewModelProvider.notifier).deleteUser(userId);
+
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => TodoScreen()));
+                  MaterialPageRoute(builder: (context) => Myhomepage()));
             },
           ),
         ],

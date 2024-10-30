@@ -3,8 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sql_f_lite/constants/colors.dart';
 import 'package:sql_f_lite/constants/textControllers.dart';
 import 'package:sql_f_lite/constants/texts.dart';
-import 'package:sql_f_lite/model/data.dart';
-import 'package:sql_f_lite/viewModel/userProvider.dart';
+import 'package:sql_f_lite/notes/repositry/model/data.dart';
+import 'package:sql_f_lite/notes/view/myHomePage.dart';
+import 'package:sql_f_lite/notes/viewModel/viewModel.dart';
 
 Future<void> showAddNoteDialog(BuildContext context, WidgetRef ref) async {
   final _formKey = GlobalKey<FormState>();
@@ -16,7 +17,7 @@ Future<void> showAddNoteDialog(BuildContext context, WidgetRef ref) async {
       return AlertDialog(
         backgroundColor: purple,
         title: addNote,
-        content: Container(
+        content: SizedBox(
           height: MediaQuery.of(context).size.height * 0.9,
           width: MediaQuery.of(context).size.width * 1,
           child: SingleChildScrollView(
@@ -66,13 +67,25 @@ Future<void> showAddNoteDialog(BuildContext context, WidgetRef ref) async {
                 String title = titleController.text;
                 String note = noteController.text;
 
-                // Add the user t
+                // print("Title: $title, Note: $note");
+                // Add the user
                 User user = User(title: title, note: note);
-                ref.read(userViewModelProvider.notifier).addUser(user);
+                ref
+                    .read(notesViewModelProvider.notifier)
+                    .addUser(user)
+                    .then((value) {
+                  if (value == 200) {
+                    Navigator.pop(context);
+                    ref.read(notesViewModelProvider.notifier).fetchNotes();
+                  }
+                });
+                print("Title: $title, Note: $note");
+
                 // Clear the fields and close the dialog
                 titleController.clear();
                 noteController.clear();
-                Navigator.of(dialogContext).pop();
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Myhomepage()));
               }
             },
           ),

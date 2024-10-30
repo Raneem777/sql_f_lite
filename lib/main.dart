@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sql_f_lite/view/homePage.dart';
+import 'package:sql_f_lite/notes/view/myHomePage.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() {
-  runApp(ProviderScope(child: const MyApp())
-    );
+  WidgetsFlutterBinding.ensureInitialized();
+
+  runApp(
+    ProviderScope(
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -12,10 +18,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home:TodoScreen()
+    return ScreenUtilInit(
+      designSize: const Size(375, 812), // Set your design size
+      minTextAdapt: true, // Optionally adapt text size
+      builder: (context, child) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          home: const Myhomepage(),
+        );
+      },
     );
   }
 }
-

@@ -1,24 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sql_f_lite/bases/baseAppBar.dart';
-import 'package:sql_f_lite/reuseablaComponents/showAddDialoge.dart';
+import 'package:sql_f_lite/bases/baseScaffold.dart';
 import 'package:sql_f_lite/constants/colors.dart';
 import 'package:sql_f_lite/constants/texts.dart';
-import 'package:sql_f_lite/view/notePage.dart';
-import 'package:sql_f_lite/viewModel/userProvider.dart';
+import 'package:sql_f_lite/notes/repositry/model/data.dart';
+import 'package:sql_f_lite/notes/view/notePage.dart';
+import 'package:sql_f_lite/notes/viewModel/viewModel.dart';
+import 'package:sql_f_lite/reuseablaComponents/showAddDialoge.dart';
 
-class TodoScreen extends ConsumerWidget {
+class Myhomepage extends ConsumerStatefulWidget {
+  const Myhomepage({super.key});
+
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    ref.read(userViewModelProvider.notifier).fetchUsers();
+  ConsumerState<Myhomepage> createState() => _MyhomepageState();
+}
 
-    final users = ref.watch(userViewModelProvider);
-   
+class _MyhomepageState extends ConsumerState<Myhomepage> {
+  List<User> notes = [];
 
-    return Scaffold(
-      backgroundColor: black,
-      appBar: appBarBase(context, "All Notes"),
-      body: users.isEmpty
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration.zero, () {
+      ref.read(notesViewModelProvider.notifier).fetchNotes();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    notes = ref.watch(notesViewModelProvider).data?.notess ?? [];
+    print(
+        "Notes in build-------------------------------------------------------------: $notes");
+    return BaseScaffold(
+      appBar: appBarBase(
+          context,
+          "All Notes",
+          Icon(
+            Icons.note,
+            color: white,
+          )),
+      viewModel: notesViewModelProvider,
+      body: notes.isEmpty
           ? Center(child: emptyNotes)
           : GridView.builder(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -26,9 +49,9 @@ class TodoScreen extends ConsumerWidget {
                   crossAxisSpacing: 2,
                   mainAxisSpacing: 7,
                   mainAxisExtent: 250),
-              itemCount: users.length,
+              itemCount: notes.length,
               itemBuilder: (context, index) {
-                final notes = users[index];
+                final userNotes = notes[index];
                 final containersColors = colors[index % colors.length];
                 return Padding(
                   padding: const EdgeInsets.all(5),
@@ -38,7 +61,7 @@ class TodoScreen extends ConsumerWidget {
                           context,
                           MaterialPageRoute(
                               builder: (context) => NoteDetailPage(
-                                    userId: notes.id as int,
+                                    userId: userNotes.id as int,
                                   )));
                     },
                     child: Container(
@@ -49,13 +72,13 @@ class TodoScreen extends ConsumerWidget {
                           borderRadius: BorderRadius.circular(10)),
                       child: ListTile(
                         title: Text(
-                          notes.title,
+                          userNotes.title,
                           style: const TextStyle(fontSize: 18),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
                         subtitle: Text(
-                          notes.note,
+                          userNotes.note,
                           maxLines: 9,
                           overflow: TextOverflow.ellipsis,
                         ),
